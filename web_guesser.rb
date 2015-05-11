@@ -9,8 +9,8 @@ class Generator
   end
 end
 
-gen = Generator.new
+number = Generator.new.num
 
 get '/' do
-  "The SECRET NUMBER is #{gen.num}"
+  erb :index, :locals => {:number => number}
 end
