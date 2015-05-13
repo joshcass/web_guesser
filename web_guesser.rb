@@ -6,8 +6,10 @@ set :num, rand(100)
 
 get '/' do
   guess = params['guess'].to_i
-  msg, color = guess_number(guess)
-  erb :index, :locals => {:number => settings.num, :msg => msg, :color => color}
+  cheat = params['cheat']
+  msg, color = guesses_left(guess)
+  msg = cheat_mode(msg) if cheat
+  erb :index, :locals => {:msg => msg, :color => color}
 end
 
 def check_guess(guess)
@@ -20,22 +22,27 @@ def check_guess(guess)
   elsif guess < settings.num
     ['Too low!', 'salmon']
   else guess == settings.num
-    guess_reset
-    ["You got it right!<br />The SECRET NUMBER is #{settings.num}", 'green']
+    correct_num = settings.num
+    reset_game
+    ["You got it right!<br />The SECRET NUMBER is #{correct_num}", 'green']
   end
 end
 
-def guess_number(guess)
+def guesses_left(guess)
   if @@guess_num > 0
     @@guess_num -= 1
     check_guess(guess)
   elsif @@guess_num == 0
-    guess_reset
-    ["You ran out of guesses!<br />There's a new secret number, try again!", 'brown']
+    reset_game
+    ["You ran out of guesses!<br />There's a new secret number, try again!", 'saddlebrown']
   end
 end
 
-def guess_reset
-  @@guess_num = 5
+def cheat_mode(msg)
+  msg + "<br />The SECRET NUMBER is #{settings.num}"
+end
 
+def reset_game
+  @@guess_num = 5
+  settings.num = rand(100)
 end
