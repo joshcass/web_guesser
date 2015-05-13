@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-set :num, rand(100)
+set :secret_num, rand(100)
 set :guess_num, 5
 
 get '/' do
@@ -13,18 +13,18 @@ get '/' do
 end
 
 def check_guess(guess)
-  if guess > settings.num + 5
+  if guess > settings.secret_num + 5
     ['Way too high!', 'red']
-  elsif guess > settings.num
+  elsif guess > settings.secret_num
     ['Too high!', 'salmon']
-  elsif guess < settings.num - 5
+  elsif guess < settings.secret_num - 5
     ['Way too low!', 'red']
-  elsif guess < settings.num
+  elsif guess < settings.secret_num
     ['Too low!', 'salmon']
   else
-    correct_num = settings.num
+    correct = settings.secret_num
     reset_game
-    ["You got it right!<br />The SECRET NUMBER is #{correct_num}", 'green']
+    ["You got it right!<br />The SECRET NUMBER is #{correct}", 'green']
   end
 end
 
@@ -39,10 +39,10 @@ def guesses_left(guess)
 end
 
 def cheat_mode(msg)
-  msg + "<br />The SECRET NUMBER is #{settings.num}"
+  msg + "<br />The SECRET NUMBER is #{settings.secret_num}"
 end
 
 def reset_game
   settings.guess_num = 5
-  settings.num = rand(100)
+  settings.secret_num = rand(100)
 end
