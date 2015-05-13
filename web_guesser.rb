@@ -22,9 +22,8 @@ def check_guess(guess)
   elsif guess < settings.secret_num
     ['Too low!', 'salmon']
   else
-    correct = settings.secret_num
     reset_game
-    ["You got it right!<br />The SECRET NUMBER is #{correct}", 'green']
+    ["You got it right!<br />The SECRET NUMBER is #{guess}", 'green']
   end
 end
 
