@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 set :num, rand(100)
-@@guess_num = 5
+set :guess_num, 5
 
 get '/' do
   guess = params['guess'].to_i
@@ -29,11 +29,11 @@ def check_guess(guess)
 end
 
 def guesses_left(guess)
-  if @@guess_num == 0
+  if settings.guess_num == 0
     reset_game
     ["You ran out of guesses!<br />There's a new secret number, try again!", 'saddlebrown']
   else
-    @@guess_num -= 1
+    settings.guess_num -= 1
     check_guess(guess)
   end
 end
@@ -43,6 +43,6 @@ def cheat_mode(msg)
 end
 
 def reset_game
-  @@guess_num = 5
+  settings.guess_num = 5
   settings.num = rand(100)
 end
