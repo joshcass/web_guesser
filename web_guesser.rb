@@ -21,7 +21,7 @@ def check_guess(guess)
     ['Way too low!', 'red']
   elsif guess < settings.num
     ['Too low!', 'salmon']
-  else guess == settings.num
+  else
     correct_num = settings.num
     reset_game
     ["You got it right!<br />The SECRET NUMBER is #{correct_num}", 'green']
@@ -29,12 +29,12 @@ def check_guess(guess)
 end
 
 def guesses_left(guess)
-  if @@guess_num > 0
-    @@guess_num -= 1
-    check_guess(guess)
-  elsif @@guess_num == 0
+  if @@guess_num == 0
     reset_game
     ["You ran out of guesses!<br />There's a new secret number, try again!", 'saddlebrown']
+  else
+    @@guess_num -= 1
+    check_guess(guess)
   end
 end
 
