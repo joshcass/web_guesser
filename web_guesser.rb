@@ -45,3 +45,26 @@ def reset_game
   settings.guess_num = 5
   settings.secret_num = rand(100)
 end
+
+__END__
+
+@@index
+
+<html>
+  <head>
+    <style>
+      body {
+        background :<%= color %>;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input type='text' name='guess' />
+      <input type='submit' value='Guess!' />
+    </form>
+    <p>
+      <%= msg %>
+    </p>
+  </body>
+</html>
